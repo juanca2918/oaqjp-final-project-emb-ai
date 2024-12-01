@@ -7,22 +7,25 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/emotion_detector', methods=['POST'])
+@app.route('/emotionDetector', methods=['GET'])
 def emotion_detector_route():
-    statement = request.form.get('statement')
+    statement = request.args.get('textToAnalyze')  # Cambiado de form a args para GET
     result = emotion_detector(statement)
     
-    if result:
-        response_text = f"For the given statement, the system response is "
+    if 'error' in result:
+        response_text = f"Error processing the statement: {result['error']}"
+    else:
+        response_text = f"For the given statement, the system response is: "
         for emotion, score in result.items():
             if emotion != 'emociones_dominantes':
-                response_text += f"'{emotion}': {score:.9f}, "
+                # Convertir score a float antes de formatearlo
+                formatted_score = float(score)
+                response_text += f"'{emotion}': {formatted_score:.9f}, "
+        
         response_text = response_text.rstrip(', ')
         
         dominant_emotion = result['emociones_dominantes']
         response_text += f". The dominant emotion is {dominant_emotion}."
-    else:
-        response_text = "Unable to process the statement."
     
     return render_template('index.html', response=response_text)
 
