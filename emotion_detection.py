@@ -36,3 +36,4 @@ def emotion_detector(variable):
             "error": "Failed to get a response",
             "status_code": response.status_code
         }
+
