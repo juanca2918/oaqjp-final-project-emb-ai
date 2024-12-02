@@ -15,15 +15,12 @@ def emotion_detector_route():
     result = emotion_detector(statement)
     
     if 'error' in result:
-        # Manejo del error recibido desde el detector de emociones
         response_text = f"Error: {result['error']}"
         if 'status_code' in result:
             response_text += f" (Status Code: {result['status_code']})"
     elif all(value is None for value in result.values()):
-        # Manejo del caso donde todas las emociones son None
         response_text = "Invalid text! Please try again!"
     else:
-        # Construcción de la respuesta exitosa
         response_text = f"For the given statement, the system response is: "
         for emotion, score in result.items():
             if emotion != 'emociones_dominantes' and score is not None:
