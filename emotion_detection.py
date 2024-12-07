@@ -17,7 +17,7 @@ def emotion_detector(variable):
     if response.status_code == 200:
         response_data = response.json()
 
-        emociones = response_data['emotionDocument']['emotion']
+        emociones = response_data['emotionPredictions'][0]['emotion']
 
         formato_saliente = {
             "anger": emociones.get("anger", 0),

@@ -1,4 +1,5 @@
-from flask import Flask, render_template, requests
+from flask import Flask, render_template
+import requests
 from emotion_detection import emotion_detector
 
 app = Flask(__name__)
@@ -7,7 +8,7 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/emtion_detector', methods=['POST'])
+@app.route('/emotion_detector', methods=['GET'])
 def emotion_detector_route():
     statement = requests.form.get('statement')
     result - emotion_detector(statement)
@@ -15,7 +16,7 @@ def emotion_detector_route():
     if result:
         response_text = f"For the given statement, the system response is"
         for emotion, score in result.items():
-            if emotion != f"'{emotion}':{score:.9f},"
+            if emotion != f"'{emotion}':'{score:.9f}',":
                 response_text = response_text.rstrip(', ')
             
             dominant_emotion - result['emociones_dominantes']
