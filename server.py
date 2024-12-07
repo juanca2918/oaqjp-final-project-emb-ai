@@ -1,5 +1,4 @@
-from flask import Flask, render_template
-import requests
+from flask import Flask, render_template, request
 from emotion_detection import emotion_detector
 
 app = Flask(__name__)
@@ -8,9 +7,9 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/emotion_detector', methods=['GET'])
+@app.route('/emotionDetector', methods=['GET'])
 def emotion_detector_route():
-    statement = requests.form.get('statement')
+    statement = request.form.get('statement')
     result - emotion_detector(statement)
 
     if result:
